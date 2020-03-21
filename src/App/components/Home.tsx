@@ -59,10 +59,12 @@ const FiltersBar = styled.div`
 
 const ToggleFiltersBar = styled(Button)`
     display: none !important;
-    font-size: 1.5em;
 
     @media (max-width: 950px) {
+        font-size: 1.5em;
+        width: 100%;
         padding: 10px;
+        margin: 1em 0 !important;
         display: block !important;
     }
 `
