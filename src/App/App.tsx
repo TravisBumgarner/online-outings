@@ -12,9 +12,8 @@ import { GlobalStyle } from 'theme'
 
 
 const AppWrapper = styled.div`
-`
-
-const ContentWrapper = styled.div`
+    max-width: 1200px;
+    margin: 2em auto;
 `
 
 const App = () => {

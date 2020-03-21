@@ -25,12 +25,16 @@ const TitleWrapper = styled.div`
     div:nth-child(3){
         text-align: right;
         font-size: 2em;
+
+        a {
+            margin-left: 1em;
+        }
     }
 `
 
 const Title = () => {
     return <TitleWrapper>
-        <div></div>
+        <div><a href="">Submit a Link!</a></div>
         <div>
             <LargeHeader>Online Outings Only</LargeHeader>
             <Text>

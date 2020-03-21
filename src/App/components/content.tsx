@@ -1,7 +1,10 @@
+type ActivityType = 'game' | 'chat'
+
 type Content = {
     title: string,
     isMature: boolean,
-    hasCost: boolean
+    hasCost: boolean,
+    activityTypes: ActivityType[]
 }
 
 const content: Content[] =
@@ -9,18 +12,27 @@ const content: Content[] =
         {
             title: "is mature no cost",
             isMature: true,
-            hasCost: false
+            hasCost: false,
+            activityTypes: ['game'],
         },
         {
-            title: "is mature has cost",
+            title: "is mature no cost",
             isMature: true,
-            hasCost: true
+            hasCost: false,
+            activityTypes: ['game'],
         },
         {
-            title: "not mature has cost",
-            isMature: false,
-            hasCost: true
-        }
+            title: "is mature no cost",
+            isMature: true,
+            hasCost: false,
+            activityTypes: ['game'],
+        },
+        {
+            title: "is mature no cost",
+            isMature: true,
+            hasCost: false,
+            activityTypes: ['chat'],
+        },
     ]
 
 export default content
