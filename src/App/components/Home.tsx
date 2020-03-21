@@ -43,6 +43,17 @@ const Filter = ({ value, setValue, label, name }: FilterProps) => {
     />
 }
 
+type ActivityProps = {
+    title: string
+}
+
+const Activity = ({ title }: ActivityProps) => {
+    return <Section>
+        <Header size="medium">{title}</Header>
+    </Section>
+}
+
+
 const Home = () => {
     const classes = useStyles();
     const [hideIsMature, setHideIsMature] = React.useState(false);
@@ -51,12 +62,13 @@ const Home = () => {
     const ActivitiesToShow = content
         .filter(({ isMature }) => hideIsMature ? !isMature : true)
         .filter(({ hasCost }) => hideHasCost ? !hasCost : true)
-        .map(({ title }) => <p>{title}</p>)
+        .map(({ title }) => <Activity title={title} />)
 
     return (
         <PageWrapper>
             <Section>
                 <FiltersBar>
+                    <Header size="medium">Filters</Header>
                     <Filter
                         value={hideIsMature}
                         setValue={setHideIsMature}
@@ -71,9 +83,7 @@ const Home = () => {
                     />
                 </FiltersBar>
             </Section>
-            <Section>
-                {ActivitiesToShow}
-            </Section>
+            {ActivitiesToShow}
         </PageWrapper>
     )
 }

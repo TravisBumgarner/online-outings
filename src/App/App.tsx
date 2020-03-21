@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import {
     Title,
-    Navigation,
     Home,
     Error,
     ScrollToTop,
@@ -25,7 +24,6 @@ const App = () => {
             <BrowserRouter>
                 <ScrollToTop />
                 <Title />
-                <Navigation />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route component={Error} />
