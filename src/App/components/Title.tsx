@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { GitHub, Twitter } from '@material-ui/icons'
 
 import { Text } from 'shared'
-import { GitHub, Twitter } from '@material-ui/icons'
+import logo from '../../favicon.png'
+
 
 const LargeHeader = styled.h1`
     margin: 0;
@@ -51,7 +53,7 @@ const TitleWrapper = styled.div`
 const Title = () => {
     return <TitleWrapper>
         <div>
-            <LargeHeader>Online Outings</LargeHeader>
+            <LargeHeader><img style={{ display: 'inline-block', height: "28px" }} src={logo} /> Online Outings</LargeHeader>
         </div>
         <div>
             <a href="https://forms.gle/omHLMwCqBJ9JhcVBA" target="_blank">Submit a Link!</a>
