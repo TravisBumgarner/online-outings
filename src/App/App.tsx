@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { ThemeProvider } from '@material-ui/styles';
 
 import {
     Title,
@@ -8,7 +9,8 @@ import {
     Error,
     ScrollToTop,
 } from './components'
-import { GlobalStyle } from 'theme'
+import { Text } from 'shared'
+import { GlobalStyle, materialTheme } from 'theme'
 
 
 const AppWrapper = styled.div`
@@ -18,17 +20,22 @@ const AppWrapper = styled.div`
 
 const App = () => {
     return (
-        <AppWrapper>
-            <GlobalStyle />
-            <BrowserRouter>
-                <ScrollToTop />
-                <Title />
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route component={Error} />
-                </Switch>
-            </BrowserRouter>
-        </AppWrapper>
+        <ThemeProvider theme={materialTheme}>
+            <AppWrapper>
+                <GlobalStyle />
+                <BrowserRouter>
+                    <ScrollToTop />
+                    <Title />
+                    <Text>
+                        Looking for an activity to do with friends, family, or coworkers? You've come to the right place!
+                </Text>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route component={Error} />
+                    </Switch>
+                </BrowserRouter>
+            </AppWrapper>
+        </ThemeProvider>
     )
 }
 

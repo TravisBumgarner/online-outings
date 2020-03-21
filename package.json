@@ -6,7 +6,7 @@
     "scripts": {
         "start-ui-dev": "NODE_ENV=development webpack-dev-server --mode=development --config webpack.js",
         "bundle-ui": "rm ./public/index.html; rm ./public/app*; mkdir ./public; NODE_ENV=production; webpack --mode=production --config webpack.js --verobose",
-        "deploy-ui": "npm run bundle-ui && firebase use remote-a-thon && firebase deploy"
+        "deploy-ui": "npm run bundle-ui && firebase use online-outings && firebase deploy"
     },
     "keywords": [],
     "author": "",

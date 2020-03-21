@@ -12,17 +12,13 @@ const LargeHeader = styled.h1`
 const TitleWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    margin: 1em;
+    margin: 1em 0;
 
     div {
-        width: calc(100vw/3);
+        width: 50vw;
     }
 
     div:nth-child(2){
-        text-align: center;
-    }
-
-    div:nth-child(3){
         text-align: right;
         font-size: 2em;
 
@@ -34,14 +30,11 @@ const TitleWrapper = styled.div`
 
 const Title = () => {
     return <TitleWrapper>
-        <div><a href="">Submit a Link!</a></div>
         <div>
-            <LargeHeader>Online Outings Only</LargeHeader>
-            <Text>
-                A collection of things to do online with others.
-            </Text>
+            <LargeHeader>Online Outings</LargeHeader>
         </div>
         <div>
+            <a href="https://forms.gle/omHLMwCqBJ9JhcVBA" target="_blank">Submit a Link!</a>
             <a target="_blank" href="https://github.com/TravisBumgarner/online-outings"><GitHub /></a>
             <a target="_blank" href="https://twitter.com/travis_the_makr"><Twitter /></a>
         </div>

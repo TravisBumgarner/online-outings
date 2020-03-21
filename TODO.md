@@ -1,5 +1,12 @@
-- [ ] Initial Boilerplate
+- [x] Initial Boilerplate
 - [ ] Favicon
-- [ ] Prod Deploy
+- [x] Prod Deploy
 - [ ] OG Tags
-- [ ] Design
+- [ ] Affiliate Links?
+- [x] Design
+- [x] Google Analytics
+- [ ] Facets to Consider
+    - [ ] People to Involve
+    - [ ] Collective Interests - interests that overlap in a group
+        - [ ] Level of Effort
+    

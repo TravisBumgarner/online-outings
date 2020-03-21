@@ -1,38 +1,39 @@
 type ActivityType = 'game' | 'chat'
 
-type Content = {
+type Activity = {
     title: string,
     isMature: boolean,
     hasCost: boolean,
-    activityTypes: ActivityType[]
+    types: ActivityType[]
 }
 
-const content: Content[] =
+const activities: Activity[] =
     [
         {
-            title: "is mature no cost",
+            title: "Some content",
             isMature: true,
             hasCost: false,
-            activityTypes: ['game'],
+            types: ['game'],
         },
         {
-            title: "is mature no cost",
+            title: "Foo Bar",
             isMature: true,
             hasCost: false,
-            activityTypes: ['game'],
+            types: ['game'],
         },
         {
-            title: "is mature no cost",
+            title: "Bazz",
             isMature: true,
             hasCost: false,
-            activityTypes: ['game'],
+            types: ['game'],
         },
         {
-            title: "is mature no cost",
+            title: "Some other thing",
             isMature: true,
             hasCost: false,
-            activityTypes: ['chat'],
+            types: ['chat'],
         },
     ]
 
-export default content
+export default activities
+export { Activity }
