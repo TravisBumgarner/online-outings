@@ -20,11 +20,31 @@ const TitleWrapper = styled.div`
 
     div:nth-child(2){
         text-align: right;
-        font-size: 2em;
+        font-size: 1em;
 
         a {
             margin-left: 1em;
         }
+    }
+
+    @media (max-width: 550px) {
+        flex-direction: column;
+        text-align: center;
+        
+        div {
+            width: 100vw;
+        }
+
+        div:nth-child(2){
+            text-align: center;
+            margin-top: 0.5em;
+
+            a {
+                margin: 0 0.5em;
+            }
+        }
+
+
     }
 `
 

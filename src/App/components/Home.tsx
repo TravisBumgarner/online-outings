@@ -16,6 +16,7 @@ const HomeWrapper = styled.div`
 const SIDEBAR_WIDTH = '300px'
 
 const Sidebar = styled.div`
+    z-index: 999;
     width: ${SIDEBAR_WIDTH};
     max-width: ${SIDEBAR_WIDTH};
     padding: 15px;
@@ -56,12 +57,13 @@ const Main = styled.div`
 const FiltersBar = styled.div`
 `
 
-const ToggleFiltersBar = styled.div`
-    display: none;
+const ToggleFiltersBar = styled(Button)`
+    display: none !important;
+    font-size: 1.5em;
 
     @media (max-width: 950px) {
         padding: 10px;
-        display: block;
+        display: block !important;
     }
 `
 
@@ -167,7 +169,7 @@ const Home = () => {
                 </FiltersBar>
             </Sidebar>
             <Main>
-                <ToggleFiltersBar onClick={() => setShowSidebar(!showSidebar)}><Tune /> Toggle Filters</ToggleFiltersBar>
+                <ToggleFiltersBar variant="contained" onClick={() => setShowSidebar(!showSidebar)}><Tune /> Toggle Filters</ToggleFiltersBar>
                 <Grid>
                     {ActivitiesToShow}
                 </Grid>
