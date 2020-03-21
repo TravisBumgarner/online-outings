@@ -5,7 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
 
 import { Header, Text, PageWrapper, Section } from 'shared'
-import { activities } from 'content'
+import content from './content'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,10 +45,12 @@ const Filter = ({ value, setValue, label, name }: FilterProps) => {
 
 const Home = () => {
     const classes = useStyles();
-    const [isMature, SetIsMature] = React.useState(false);
+    const [hideIsMature, setHideIsMature] = React.useState(false);
+    const [hideHasCost, setHideHasCost] = React.useState(false);
 
-    const ActivitiesToShow = activities
-        .filter(({ age }) => isMature ? age >= 18 : true)
+    const ActivitiesToShow = content
+        .filter(({ isMature }) => hideIsMature ? !isMature : true)
+        .filter(({ hasCost }) => hideHasCost ? !hasCost : true)
         .map(({ title }) => <p>{title}</p>)
 
     return (
@@ -56,10 +58,16 @@ const Home = () => {
             <Section>
                 <FiltersBar>
                     <Filter
-                        value={isMature}
-                        setValue={SetIsMature}
+                        value={hideIsMature}
+                        setValue={setHideIsMature}
                         name="is-nature"
                         label="Hide Mature Content"
+                    />
+                    <Filter
+                        value={hideHasCost}
+                        setValue={setHideHasCost}
+                        name="has-cost"
+                        label="Hide Not Free"
                     />
                 </FiltersBar>
             </Section>
