@@ -16,7 +16,6 @@ const AppWrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
-
 `
 
 const App = () => {

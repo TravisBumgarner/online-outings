@@ -1,7 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { FaTwitter, FaGithub } from 'react-icons/fa'
+import { GitHub, Twitter } from '@material-ui/icons';
+
 
 import { Header } from 'shared'
 
@@ -24,8 +25,8 @@ const Navigation = () => {
         <MenuSection>
             <Menu>
                 <MenuItem><NavLink exact activeStyle={activeStyle} to="/">Home</NavLink></MenuItem>
-                <MenuItem><a target="_blank" href="https://github.com/TravisBumgarner/online-outings"><FaGithub /></a></MenuItem>
-                <MenuItem><a target="_blank" href="https://twitter.com/travis_the_makr"><FaTwitter /></a>.</MenuItem>
+                <MenuItem><a target="_blank" href="https://github.com/TravisBumgarner/online-outings"><GitHub /></a></MenuItem>
+                <MenuItem><a target="_blank" href="https://twitter.com/travis_the_makr"><Twitter /></a>.</MenuItem>
             </Menu>
         </MenuSection>
     </MenuWrapper >
