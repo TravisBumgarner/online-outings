@@ -1,0 +1,5 @@
+- [ ] Initial Boilerplate
+- [ ] Favicon
+- [ ] Prod Deploy
+- [ ] OG Tags
+- [ ] Design
