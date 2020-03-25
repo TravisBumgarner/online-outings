@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { Tune, Close } from '@material-ui/icons'
-
+import axios from 'axios'
 
 import { Header, Text } from 'shared'
 import activities, { Activity } from './activities'
@@ -117,9 +117,23 @@ const DEFAULT_SELECTED_TYPES: SelectableTypes = {
 }
 
 const Home = () => {
-    const [hideHasCost, setHideHasCost] = React.useState(false);
-    const [selectableTypes, setSelectableTypes] = React.useState<SelectableTypes>(DEFAULT_SELECTED_TYPES);
-    const [showSidebar, setShowSidebar] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true)
+    const [isError, setIsError] = React.useState(false)
+    const [categories, setCategories] = React.useState<any>({})
+    React.useEffect(() => {
+        Promise.all([axios.get('http://localhost:8000/categories')]).then(([categoires]) => {
+            setCategories(categories)
+        }).catch(error => {
+            console.log(error)
+            setIsError(true)
+        }).finally(() => {
+            setIsLoading(false)
+        })
+    }, [])
+
+    const [hideHasCost, setHideHasCost] = React.useState(false)
+    const [selectableTypes, setSelectableTypes] = React.useState<SelectableTypes>(DEFAULT_SELECTED_TYPES)
+    const [showSidebar, setShowSidebar] = React.useState(false)
     const resetFilters = () => {
         setHideHasCost(false)
         setSelectableTypes(DEFAULT_SELECTED_TYPES)
@@ -130,8 +144,21 @@ const Home = () => {
         .filter(({ types }) => types.some(type => selectableTypes[type]))
         .map(params => <ActivityCard {...params} />)
 
+    if (isError) {
+        return <HomeWrapper>
+            Oh heck. Whoops
+        </HomeWrapper>
+    }
+
+    if (isLoading) {
+        return <HomeWrapper>
+            One heckin moment please.
+        </HomeWrapper>
+    }
+
     return (
         <HomeWrapper>
+
             <Sidebar showSidebar={showSidebar}>
                 <FiltersBar>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
