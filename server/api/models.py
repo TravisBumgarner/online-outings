@@ -23,8 +23,8 @@ class Activity(models.Model):
     name = models.CharField(max_length=100)
     is_published = models.BooleanField(default=False)
     date_created = models.DateField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    link = models.ForeignKey(Link, on_delete=models.CASCADE)
+    category = models.ManyToManyField("Category")
+    link = models.ManyToManyField("Link")
     description = models.TextField()
 
     def __str__(self):
