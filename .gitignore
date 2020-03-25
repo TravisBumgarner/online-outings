@@ -5,3 +5,5 @@ dist/
 .DS_Store
 postgres-data/
 public/
+.vscode/
+*.pyc
