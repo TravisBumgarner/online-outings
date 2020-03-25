@@ -96,12 +96,10 @@ const Grid = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
 `
 
-const ActivityCard = styled(({ title, isMature, hasCost, className, types }: Activity & { className: string }) => {
+const ActivityCard = styled(({ title, description, url, className }: Activity & { className: string }) => {
     return <div className={className}>
-        <Header size="medium">{title}</Header>
-        <p>Is Mature: {isMature + ''}</p>
-        <p>Has cost: {hasCost + ''}</p>
-        <p>Types: {types.join(', ')}</p>
+        <Header size="medium">{title} <a href={description}>[Link]</a></Header>
+        <Text>{description}</Text>
     </div>
 })`
     background-color: var(--accent-color);
@@ -119,18 +117,15 @@ const DEFAULT_SELECTED_TYPES: SelectableTypes = {
 }
 
 const Home = () => {
-    const [hideIsMature, setHideIsMature] = React.useState(false);
     const [hideHasCost, setHideHasCost] = React.useState(false);
     const [selectableTypes, setSelectableTypes] = React.useState<SelectableTypes>(DEFAULT_SELECTED_TYPES);
     const [showSidebar, setShowSidebar] = React.useState(false);
     const resetFilters = () => {
-        setHideIsMature(false)
         setHideHasCost(false)
         setSelectableTypes(DEFAULT_SELECTED_TYPES)
     }
 
     const ActivitiesToShow = activities
-        .filter(({ isMature }) => hideIsMature ? !isMature : true)
         .filter(({ hasCost }) => hideHasCost ? !hasCost : true)
         .filter(({ types }) => types.some(type => selectableTypes[type]))
         .map(params => <ActivityCard {...params} />)
@@ -155,12 +150,6 @@ const Home = () => {
                         )
                     }
                     <Header size="medium">Special</Header>
-                    <Filter
-                        value={hideIsMature}
-                        setValue={setHideIsMature}
-                        name="is-nature"
-                        label="Hide Mature Content"
-                    />
                     <Filter
                         value={hideHasCost}
                         setValue={setHideHasCost}
