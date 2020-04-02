@@ -136,7 +136,7 @@ const Home = () => {
 
     const ActivitiesToShow = activities
         // .filter(({ hasCost }) => hideHasCost ? !hasCost : true)
-        // .filter(({ categories }) => categories.some(category => selectableTypes[category]))
+        .filter(({ category }) => category.some(({ name }) => selectableTypes[name]))
         .map(params => <ActivityCard key={params.id} {...params} />)
 
     if (isError) {
