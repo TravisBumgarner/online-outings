@@ -1,3 +1,4 @@
+static/
 node_modules/
 config.js
 config.ts
@@ -7,3 +8,4 @@ postgres-data/
 public/
 .vscode/
 *.pyc
+keys.json

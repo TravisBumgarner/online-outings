@@ -1,0 +1,5 @@
+- [ ] Way to collect feedback from users
+- [ ] Way to submit new content
+- [ ] Filters
+    - [ ] Safe for kids
+    - [ ] Filter by age (Like 5-8, 9-12 etc)

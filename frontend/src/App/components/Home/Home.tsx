@@ -6,8 +6,9 @@ import Button from '@material-ui/core/Button';
 import { Tune, Close } from '@material-ui/icons'
 import axios from 'axios'
 
+import { ActivityCard } from './components'
+
 import { Header, Text } from 'shared'
-import activities, { Activity } from './activities'
 
 const HomeWrapper = styled.div`
     display: flex;
@@ -93,18 +94,7 @@ const Filter = ({ value, setValue, label, name }: FilterProps) => {
 const Grid = styled.div`
     display: grid;
     grid-gap: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
-`
-
-const ActivityCard = styled(({ title, description, url, className }: Activity & { className: string }) => {
-    return <div className={className}>
-        <Header size="medium">{title} <a href={description}>[Link]</a></Header>
-        <Text>{description}</Text>
-    </div>
-})`
-    background-color: var(--accent-color);
-    border-radius: 15px;
-    padding: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 `
 
 type SelectableTypes = {
@@ -119,10 +109,15 @@ const DEFAULT_SELECTED_TYPES: SelectableTypes = {
 const Home = () => {
     const [isLoading, setIsLoading] = React.useState(true)
     const [isError, setIsError] = React.useState(false)
-    const [categories, setCategories] = React.useState<any>({})
+    const [activities, setActivities] = React.useState<any>([])
+
     React.useEffect(() => {
-        Promise.all([axios.get('http://localhost:8000/categories')]).then(([categoires]) => {
-            setCategories(categories)
+        Promise.all([
+            axios.get('http://localhost:8000/activities')
+        ]).then(([
+            activities,
+        ]) => {
+            setActivities(activities.data)
         }).catch(error => {
             console.log(error)
             setIsError(true)
@@ -130,7 +125,7 @@ const Home = () => {
             setIsLoading(false)
         })
     }, [])
-
+    console.log(activities)
     const [hideHasCost, setHideHasCost] = React.useState(false)
     const [selectableTypes, setSelectableTypes] = React.useState<SelectableTypes>(DEFAULT_SELECTED_TYPES)
     const [showSidebar, setShowSidebar] = React.useState(false)
@@ -140,9 +135,9 @@ const Home = () => {
     }
 
     const ActivitiesToShow = activities
-        .filter(({ hasCost }) => hideHasCost ? !hasCost : true)
-        .filter(({ types }) => types.some(type => selectableTypes[type]))
-        .map(params => <ActivityCard {...params} />)
+        // .filter(({ hasCost }) => hideHasCost ? !hasCost : true)
+        // .filter(({ categories }) => categories.some(category => selectableTypes[category]))
+        .map(params => <ActivityCard key={params.id} {...params} />)
 
     if (isError) {
         return <HomeWrapper>
