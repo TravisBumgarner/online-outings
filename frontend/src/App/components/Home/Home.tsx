@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import { Tune, Close } from '@material-ui/icons'
+import { Tune } from '@material-ui/icons'
 import axios from 'axios'
 
-import { ActivityCard } from './components'
+import { ActivityCard, Sidebar, CloseSidebar } from './components'
 
 import { Header, Text } from 'shared'
 
@@ -14,49 +14,12 @@ const HomeWrapper = styled.div`
     display: flex;
 `
 
-const SIDEBAR_WIDTH = '300px'
-
-const Sidebar = styled.div`
-    z-index: 999;
-    width: ${SIDEBAR_WIDTH};
-    max-width: ${SIDEBAR_WIDTH};
-    padding: 15px;
-    margin-right: 15px;
-    background-color: var(--background-color);
-
-    ${({ showSidebar }) => showSidebar ? `display: block;` : `display: none;`}
-
-    @media (max-width: 950px) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        border-radius: 0;
-        height: 100vh;
-        overflow-y: scroll;
-        border-right: 5px solid var(--accent-color);
-    }
-
-    @media (min-width: 950px) {
-        display: block;
-        border-radius: 15px;
-        background-color: var(--accent-color);
-    }
-`
-
-const CloseSidebar = styled(Close)`
-    display: none !important;
-
-    @media (max-width: 950px) {
-        display: block !important;
-    }
-`
-
 const Main = styled.div`
     flex-grow: 1;
 `
 
 const FiltersBar = styled.div`
-   min-width: 220px; 
+   width: 220px; 
 `
 
 const ToggleFiltersBar = styled(Button)`
@@ -126,7 +89,7 @@ const Home = () => {
             setIsLoading(false)
         })
     }, [])
-    console.log(activities)
+
     const [hideHasCost, setHideHasCost] = React.useState(false)
     const [selectableTypes, setSelectableTypes] = React.useState<SelectableTypes>(DEFAULT_SELECTED_TYPES)
     const [showSidebar, setShowSidebar] = React.useState(false)
@@ -148,7 +111,7 @@ const Home = () => {
 
     if (isLoading) {
         return <HomeWrapper>
-            One heckin moment please.
+            Loading...
         </HomeWrapper>
     }
 
