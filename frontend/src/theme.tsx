@@ -20,10 +20,11 @@ const GlobalStyle = createGlobalStyle`
     }
 
     a {
-        text-decoration: none;
+        /* text-decoration: none; */
+        color: var(--foreground-color);
 
         &:hover {
-            text-decoration: none;
+            /* text-decoration: none; */
         }
 
         &:visited {

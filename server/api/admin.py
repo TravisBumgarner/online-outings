@@ -4,30 +4,19 @@ from django.contrib import admin
 
 from .models import *
 
+
 class LinkInline(admin.TabularInline):
     model = Link
     extra = 3
-    
+
+
 @admin.register(Activity)
-class GalleryAdmin(admin.ModelAdmin):
-    inlines = (
-        LinkInline,
-    )
+class ActivityAdmin(admin.ModelAdmin):
+    inlines = (LinkInline,)
 
-    list_display = (
-        'name',
-    )
-
-
-@admin.register(Link)
-class GalleryAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-    )
+    list_display = ("name", "description", "date_created")
 
 
 @admin.register(Category)
-class GalleryAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-    )
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("name",)

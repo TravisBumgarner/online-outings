@@ -1,44 +1,90 @@
 import React from 'react'
 import styled from 'styled-components'
+import { v5 as uuidv5 } from 'uuid'
 
 import { Header, Text } from 'shared'
-
-// [{…}]
-// 0:
-// id: 1
-// name: "This is a test."
-// is_published: true
-// date_created: "2020-04-02"
-// category: [{…}]
-// link: [{…}]
-// description: "This is a game."
-// __proto__: Object
-// length: 1
-
-type ActivityType = 'game' | 'chat'
+import { categoryIconMap, Category, categoryNameMap } from 'utilities'
 
 type Activity = {
+    id: string
     name: string
-    link: {
+    links: {
         name: string
         url: string
         id: number
     }[]
     description: string
-    hasCost: boolean
-    types: ActivityType[]
+    categories: {
+        name: Category
+        id: string
+    }[]
 }
 
-const ActivityCard = styled(({ name, description, link, className }: Activity & { className: string }) => {
-    return <div className={className}>
-        <Header size="medium">{name}</Header>
-        {link.map(({ name, url, id }) => <a key={id} href={url}>{name}</a>)}
-        <Text>{description}</Text>
-    </div>
+const CategoryLabelList = styled.ul`
+    margin: 0;
+    padding: 0;
+
+`
+
+const CategoryLabel = styled(({ name, className }: { name: Category }) => {
+    const Icon = categoryIconMap[name]
+    return <li className={className}><Icon /><span>{categoryNameMap[name]}</span></li>
 })`
-    background-color: var(--accent-color);
+    display: inline-block;
+    background-color: white;
+    border-radius: 7px;
+    padding: 0px 6px;
+    margin-right: 6px;
+    font-size: 0.75em;
+    
+    span {
+        display: inline-block;
+        position: relative;
+        top: -6px;
+        margin-left: 6px;
+    }
+
+    svg {
+        position: relative;
+        top: 2px;
+    }
+`
+
+const Wrapper = styled.div`
+    background-color: hsl(${({ randInt }: { randInt: string }) => randInt}, 100%, 81%);
     border-radius: 15px;
     padding: 15px;
 `
 
+const convertNameToHue = (str: string) => {
+    // This is excessive. I know.
+    const MY_NAMESPACE = '01d09e82-ce76-402a-bc81-5e2fd2f5386a'
+    const uuid = uuidv5(str, MY_NAMESPACE)
+    let hash = 0;
+    for (let i = 0; i < uuid.length; i++) {
+        const chr = uuid.charCodeAt(i)
+        hash = ((hash << 5) - hash) + chr
+        hash |= 0
+    }
+    return Math.abs(hash % 360);
+}
+
+const ActivityCard = ({ id, name, description, links, categories }: Activity & { className: string }) => {
+    return <Wrapper randInt={`${convertNameToHue(name)}`}>
+        <Header size="medium">{name}</Header>
+        <ul>
+            {links.map(({ name, url, id }) => (
+                <li key={id}>
+                    <a target="_blank" href={url}>{name}</a>
+                </li>
+            ))}
+        </ul>
+        <Text>{description}</Text>
+        <CategoryLabelList>
+            {categories.map(({ name, id }) => <CategoryLabel style={{ fontSize: '0.75em' }} key={id} name={name} />)}
+        </CategoryLabelList>
+    </Wrapper>
+}
+
 export default ActivityCard
+export { Activity }

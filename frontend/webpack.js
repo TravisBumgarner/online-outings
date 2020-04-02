@@ -17,6 +17,7 @@ module.exports = env => {
                 shared: path.resolve(__dirname, 'src/shared/'),
                 theme: path.resolve(__dirname, 'src/theme.tsx'),
                 images: path.resolve(__dirname, 'src/images/'),
+                utilities: path.resolve(__dirname, 'src/utilities.tsx'),
             },
             extensions: ['.ts', '.tsx', '.js']
         },

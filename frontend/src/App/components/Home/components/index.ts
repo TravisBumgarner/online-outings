@@ -1,8 +1,9 @@
-import ActivityCard from './ActivityCard'
+import ActivityCard, { Activity } from './ActivityCard'
 import Sidebar, { CloseSidebar } from './Sidebar'
 
 export {
     ActivityCard,
     Sidebar,
-    CloseSidebar
+    CloseSidebar,
+    Activity
 }

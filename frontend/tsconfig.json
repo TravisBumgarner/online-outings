@@ -9,6 +9,12 @@
             "shared": [
                 "src/shared"
             ],
+            "theme": [
+                "src/theme.tsx"
+            ],
+            "utilities": [
+                "src/utilities.tsx"
+            ],
         },
         "module": "commonjs",
         "noImplicitAny": true,

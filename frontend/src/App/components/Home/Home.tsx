@@ -6,8 +6,8 @@ import Button from '@material-ui/core/Button';
 import { Tune } from '@material-ui/icons'
 import axios from 'axios'
 
-import { ActivityCard, Sidebar, CloseSidebar } from './components'
-
+import { ActivityCard, Sidebar, CloseSidebar, Activity } from './components'
+import { Category, categoryNameMap } from 'utilities'
 import { Header, Text } from 'shared'
 
 const HomeWrapper = styled.div`
@@ -61,19 +61,21 @@ const Grid = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 `
 
-type SelectableTypes = {
-    game: boolean, chat: boolean
-}
+type SelectableCategories = { [key in Category]: boolean }
 
-const DEFAULT_SELECTED_TYPES: SelectableTypes = {
+const DEFAULT_SELECTED_CATEGORIES: SelectableCategories = {
+    discuss: true,
     game: true,
-    chat: true
+    move_about: true,
+    watch: true,
 }
 
 const Home = () => {
     const [isLoading, setIsLoading] = React.useState(true)
     const [isError, setIsError] = React.useState(false)
-    const [activities, setActivities] = React.useState<any>([])
+    const [activities, setActivities] = React.useState<Activity[]>([])
+    const [selectedCategories, setSelectableCategories] = React.useState<SelectableCategories>(DEFAULT_SELECTED_CATEGORIES)
+    const [showSidebar, setShowSidebar] = React.useState(false)
 
     React.useEffect(() => {
         Promise.all([
@@ -90,22 +92,17 @@ const Home = () => {
         })
     }, [])
 
-    const [hideHasCost, setHideHasCost] = React.useState(false)
-    const [selectableTypes, setSelectableTypes] = React.useState<SelectableTypes>(DEFAULT_SELECTED_TYPES)
-    const [showSidebar, setShowSidebar] = React.useState(false)
     const resetFilters = () => {
-        setHideHasCost(false)
-        setSelectableTypes(DEFAULT_SELECTED_TYPES)
+        setSelectableCategories(DEFAULT_SELECTED_CATEGORIES)
     }
 
     const ActivitiesToShow = activities
-        // .filter(({ hasCost }) => hideHasCost ? !hasCost : true)
-        .filter(({ category }) => category.some(({ name }) => selectableTypes[name]))
+        .filter(({ categories }) => categories.some(({ name }) => selectedCategories[name]))
         .map(params => <ActivityCard key={params.id} {...params} />)
 
     if (isError) {
         return <HomeWrapper>
-            Oh heck. Whoops
+            Something went wrong, please try again later.
         </HomeWrapper>
     }
 
@@ -126,22 +123,16 @@ const Home = () => {
                     </div>
                     <Header size="medium">By Activity</Header>
                     {
-                        Object.keys(selectableTypes).map((selectableType: keyof SelectableTypes) =>
+                        Object.keys(selectedCategories).map((selectableCategory: keyof SelectableCategories) =>
                             <Filter
-                                value={selectableTypes[selectableType]}
-                                setValue={() => setSelectableTypes({ ...selectableTypes, [selectableType]: !selectableTypes[selectableType] })}
-                                name={`show-${selectableType}`}
-                                label={selectableType.charAt(0).toUpperCase() + selectableType.slice(1)}
+                                key={selectableCategory}
+                                value={selectedCategories[selectableCategory]}
+                                setValue={() => setSelectableCategories({ ...selectedCategories, [selectableCategory]: !selectedCategories[selectableCategory] })}
+                                name={`show-${selectableCategory}`}
+                                label={categoryNameMap[selectableCategory]}
                             />
                         )
                     }
-                    <Header size="medium">Special</Header>
-                    <Filter
-                        value={hideHasCost}
-                        setValue={setHideHasCost}
-                        name="has-cost"
-                        label="Show Only Free Content"
-                    />
                     <Button variant="contained" onClick={resetFilters}>Reset Filters</Button>
                 </FiltersBar>
             </Sidebar>
