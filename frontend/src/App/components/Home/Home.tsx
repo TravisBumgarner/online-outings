@@ -66,6 +66,7 @@ type SelectableCategories = { [key in Category]: boolean }
 const DEFAULT_SELECTED_CATEGORIES: SelectableCategories = {
     discuss: true,
     game: true,
+    listen: true,
     move_about: true,
     watch: true,
 }
@@ -98,6 +99,7 @@ const Home = () => {
 
     const ActivitiesToShow = activities
         .filter(({ categories }) => categories.some(({ name }) => selectedCategories[name]))
+        .sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1)
         .map(params => <ActivityCard key={params.id} {...params} />)
 
     if (isError) {

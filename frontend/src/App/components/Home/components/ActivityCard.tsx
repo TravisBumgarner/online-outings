@@ -81,7 +81,9 @@ const ActivityCard = ({ id, name, description, links, categories }: Activity & {
         </ul>
         <Text>{description}</Text>
         <CategoryLabelList>
-            {categories.map(({ name, id }) => <CategoryLabel style={{ fontSize: '0.75em' }} key={id} name={name} />)}
+            {categories
+                .sort((a, b) => a.name < b.name ? -1 : 1)
+                .map(({ name, id }) => <CategoryLabel key={id} name={name} />)}
         </CategoryLabelList>
     </Wrapper>
 }

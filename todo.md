@@ -1,7 +1,9 @@
 - [ ] Way to collect feedback from users
 - [x] Way to submit new content
 - [ ] Deploy to production
+- [ ] How to get online tutorial (zoom etc)
 - [ ] Create content
+- [ ] Analytics
 - [ ] Filters
     - [ ] Safe for kids
     - [ ] Filter by age (Like 5-8, 9-12 etc)
