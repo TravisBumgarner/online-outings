@@ -56,6 +56,7 @@ const Main = styled.div`
 `
 
 const FiltersBar = styled.div`
+   min-width: 220px; 
 `
 
 const ToggleFiltersBar = styled(Button)`
