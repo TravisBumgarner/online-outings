@@ -14,10 +14,15 @@ class Category(models.Model):
 
 class Activity(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100)
-    date_created = models.DateField()
     categories = models.ManyToManyField("Category")
+    date_created = models.DateField()
     description = models.TextField()
+    min_cost = models.FloatField()
+    max_cost = models.FloatField()
+    min_participants = models.IntegerField()
+    max_participants = models.IntegerField()
+    name = models.CharField(max_length=100)
+    requirements = models.TextField()
 
     def __str__(self):
         return self.name

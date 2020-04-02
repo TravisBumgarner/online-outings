@@ -19,13 +19,18 @@ class Command(BaseCommand):
             for row in csvreader:
                 if row["is_published"].lower() == "false":
                     continue
-
+                print(row["name"])
                 activity = Activity(
                     name=row["name"],
                     description=row["description"],
                     date_created=datetime.datetime.strptime(
                         row["date_created"], "%m/%d/%Y"
                     ).date(),
+                    min_cost=row["min_cost"],
+                    max_cost=row["max_cost"],
+                    min_participants=row["min_participants"],
+                    max_participants=row["max_participants"],
+                    requirements=row["requirements"],
                 )
                 activity.save()
 
@@ -41,7 +46,6 @@ class Command(BaseCommand):
                     for category in row["categories"].split(",")
                     if len(category)
                 ]
-                print(categories_names)
                 for category_name in categories_names:
                     try:
                         category = Category.objects.get(name=category_name)
@@ -49,4 +53,4 @@ class Command(BaseCommand):
                         category = Category.objects.create(name=category_name)
 
                     category.save()
-                    activity.category.add(category)
+                    activity.categories.add(category)
