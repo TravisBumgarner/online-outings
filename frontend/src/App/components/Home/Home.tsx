@@ -80,7 +80,7 @@ const Home = () => {
 
     React.useEffect(() => {
         Promise.all([
-            axios.get('http://localhost:8000/activities')
+            axios.get(__API__ + '/activities')
         ]).then(([
             activities,
         ]) => {

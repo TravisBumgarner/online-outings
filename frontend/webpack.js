@@ -2,6 +2,21 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+let apiHost = '';
+
+(
+    function () {
+        switch (process.env.NODE_ENV) {
+            case 'production':
+                apiHost = "'https://api.onlineoutings.com'"
+                break
+            case 'development':
+                apiHost = "'http://localhost:8000'"
+                break
+        }
+    }
+)()
+
 module.exports = env => {
     return {
         entry: {
@@ -45,6 +60,9 @@ module.exports = env => {
                 template: './src/index.template.ejs',
                 favicon: "./src/favicon.png",
                 inject: 'body'
+            }),
+            new webpack.DefinePlugin({
+                __API__: apiHost
             })
         ]
     }
