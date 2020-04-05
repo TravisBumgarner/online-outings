@@ -63,7 +63,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "server.wsgi.application"
 
 if os.getenv("IS_CLOUD_RUN", None):
-    CORS_ORIGIN_WHITELIST = ["https://onlineoutings.com"]
+    CORS_ORIGIN_WHITELIST = [
+        "https://onlineoutings.com",
+        "https://www.onlineoutings.com",
+    ]
     DEBUG = config.DEBUG
     ALLOWED_HOSTS = config.ALLOWED_HOSTS
     DATABASES = {
