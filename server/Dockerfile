@@ -1,32 +1,23 @@
-#	Copyright 2015, Google, Inc.
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# pull official base image
+FROM python:3.7-slim
 
-# [START docker]
+# set work directory
+WORKDIR /usr/src/app
 
-# The Google App Engine python runtime is Debian Jessie with Python installed
-# and various os-level packages to allow installation of popular Python
-# libraries. The source is on github at:
-# https://github.com/GoogleCloudPlatform/python-docker
-FROM gcr.io/google_appengine/python
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Create a virtualenv for the application dependencies.
-# # If you want to use Python 2, use the -p python2.7 flag.
-RUN virtualenv -p python3 /env
-ENV PATH /env/bin:$PATH
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt /usr/src/app/requirements.txt
 
-ADD requirements.txt /app/requirements.txt
-RUN /env/bin/pip install --upgrade pip && /env/bin/pip install -r /app/requirements.txt
-ADD . /app
+RUN pip install -r requirements.txt
 
-CMD gunicorn -b :$PORT server.wsgi
-# [END docker]
+COPY . /usr/src/app/
+
+# Run the web service on container startup. Here we use the gunicorn
+# webserver, with one worker process and 8 threads.
+# For environments with multiple CPU cores, increase the number of workers
+# to be equal to the cores available.
+CMD ["gunicorn", "--bind", ":8080", "--workers", "3", "server.wsgi:application"]

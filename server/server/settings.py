@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from server import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,13 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "o#w2#p9cyfe05ds9+rsj&!8v1p0ktrj$%st9a@sfn25!2(fc&^"
+SECRET_KEY = config.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.DEBUG
 
 # This is bad - you should feel bad.
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = config.ALLOWED_HOSTS
 
 
 # Application definition
@@ -54,7 +56,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
+CORS_ORIGIN_WHITELIST = ("http://localhost:3000", "https://onlineoutings.com")
 
 ROOT_URLCONF = "server.urls"
 
@@ -80,26 +82,30 @@ WSGI_APPLICATION = "server.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "online_outings",
-        "USER": "postgres",
-        "PASSWORD": "docker",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
-    },
-    "production": {
-        # If you are using Cloud SQL for MySQL rather than PostgreSQL, set
-        # 'ENGINE': 'django.db.backends.mysql' instead of the following.
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "online_outings",
-        "USER": os.getenv("DATABASE_USER"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
-    },
-}
+if os.getenv("GAE_APPLICATION", None):
+    DATABASES = {
+        "default": {
+            # If you are using Cloud SQL for MySQL rather than PostgreSQL, set
+            # 'ENGINE': 'django.db.backends.mysql' instead of the following.
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": config.POSTGRES_DATABASE,
+            "USER": config.POSTGRES_USER,
+            "PASSWORD": config.POSTGRES_PASSWORD,
+            "HOST": config.POSTGRES_HOST,
+            "PORT": "5432",
+        },
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config.POSTGRES_DATABASE,
+            "USER": config.POSTGRES_USER,
+            "PASSWORD": config.POSTGRES_PASSWORD,
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        },
+    }
 
 
 # Password validation
@@ -132,8 +138,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = "/static/"
-# STATIC_URL = "http://storage.googleapis.com/online_outings/static/"
+# STATIC_URL = "/static/"
+STATIC_URL = "https://storage.googleapis.com/online-outings/static/"
 STATIC_ROOT = "static/"
 
 REST_FRAMEWORK = {
