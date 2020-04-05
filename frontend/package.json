@@ -5,8 +5,9 @@
     "main": "index.js",
     "scripts": {
         "start-ui-dev": "NODE_ENV=development webpack-dev-server --mode=development --config webpack.js",
-        "bundle-ui": "rm ./public/index.html; rm ./public/app*; mkdir ./public; NODE_ENV=production; webpack --mode=production --config webpack.js --verobose",
-        "deploy-ui": "npm run bundle-ui && firebase use online-outings && firebase deploy"
+        "bundle-ui": "NODE_ENV=production; rm -rf ./public; mkdir ./public; webpack --mode=production --config webpack.js --verobose",
+        "test-deploy": "npm run bundle-ui && serve -p 8080 -s public",
+        "deploy": "gcloud builds submit --tag gcr.io/online-outings-273216/frontend && gcloud run deploy frontend --image gcr.io/online-outings-273216/frontend --platform managed --region us-east1"
     },
     "keywords": [],
     "author": "",

@@ -7,15 +7,20 @@ let apiHost = '';
 (
     function () {
         switch (process.env.NODE_ENV) {
-            case 'production':
-                apiHost = "'https://api.onlineoutings.com'"
-                break
             case 'development':
                 apiHost = "'http://localhost:8000'"
+                break
+            case 'production':
+            default:
+                apiHost = "'https://api.onlineoutings.com'"
                 break
         }
     }
 )()
+
+if (!(apiHost && apiHost.length)) {
+    throw new Error('No apiHost specified.')
+}
 
 module.exports = env => {
     return {

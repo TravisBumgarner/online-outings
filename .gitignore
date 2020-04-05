@@ -2,6 +2,7 @@ static/
 node_modules/
 config.js
 config.ts
+config.py
 dist/
 .DS_Store
 postgres-data/

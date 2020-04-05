@@ -1,6 +1,7 @@
 - [ ] Way to collect feedback from users
 - [x] Way to submit new content
 - [ ] Deploy to production
+    - [ ] Fix settings.py secret key, allowed hosts
 - [ ] How to get online tutorial (zoom etc)
 - [ ] Create content
 - [ ] Analytics
