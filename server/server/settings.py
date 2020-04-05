@@ -17,21 +17,7 @@ from server import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config.SECRET_KEY
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config.DEBUG
-
-# This is bad - you should feel bad.
-ALLOWED_HOSTS = config.ALLOWED_HOSTS
-
-
-# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -56,8 +42,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000", "https://onlineoutings.com")
-
 ROOT_URLCONF = "server.urls"
 
 TEMPLATES = [
@@ -78,11 +62,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "server.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-if os.getenv("GAE_APPLICATION", None):
+if os.getenv("IS_CLOUD_RUN", None):
+    CORS_ORIGIN_WHITELIST = ["https://onlineoutings.com"]
+    DEBUG = config.DEBUG
+    ALLOWED_HOSTS = config.ALLOWED_HOSTS
     DATABASES = {
         "default": {
             # If you are using Cloud SQL for MySQL rather than PostgreSQL, set
@@ -96,15 +79,27 @@ if os.getenv("GAE_APPLICATION", None):
         },
     }
 else:
+    CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "https://onlineoutings.com"]
+    DEBUG = True
+    ALLOWED_HOSTS = ["*"]
+    # First database is for local postgres, second is for conencting via cloud_sql_proxy to GCP
     DATABASES = {
+        # "default": {
+        #     "ENGINE": "django.db.backends.postgresql",
+        #     "NAME": "online_outings",
+        #     "USER": "postgres",
+        #     "PASSWORD": "docker",
+        #     "HOST": "127.0.0.1",
+        #     "PORT": "5432",
+        # },
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
             "NAME": config.POSTGRES_DATABASE,
             "USER": config.POSTGRES_USER,
             "PASSWORD": config.POSTGRES_PASSWORD,
             "HOST": "127.0.0.1",
             "PORT": "5432",
-        },
+        }
     }
 
 
